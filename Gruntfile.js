@@ -15,6 +15,7 @@ module.exports = function (grunt) {
   // Time how long tasks take. Can help when optimizing build times
   require('time-grunt')(grunt);
 
+
   // Define the configuration for all the tasks
   grunt.initConfig({
 
@@ -349,9 +350,46 @@ module.exports = function (grunt) {
         configFile: 'karma.conf.js',
         singleRun: true
       }
-    }
-  });
+    },
 
+    s3: {
+      options: {
+        bucket: 'acai',
+        region: 'ap-northeast-1',
+        access: 'public-read',
+        headers: {
+              // Two Year cache policy (1000 * 60 * 60 * 24 * 730)
+          'Cache-Control': 'max-age=630720000, public',
+          'Expires': new Date(Date.now() + 63072000000).toUTCString()
+        }
+      },
+      dev: {
+        upload: [
+          {
+            src: 'dist/*',
+            dest: '/'
+          },
+          {
+            src: 'dist/scripts/*.*',
+            dest: '/scripts/'
+          },
+          {
+            src: 'dist/styles/*.*',
+            dest: '/styles/'
+          },
+          {
+            src: 'dist/views/*',
+            dest: '/views/'
+          },
+          {
+            src: 'dist/images/*',
+            dest: '/images/'
+          }
+        ]
+      }
+    }
+
+  });
 
   grunt.registerTask('serve', function (target) {
     if (target === 'dist') {
@@ -402,5 +440,10 @@ module.exports = function (grunt) {
     'newer:jshint',
     'test',
     'build'
+  ]);
+
+  grunt.registerTask('deploy', [
+    'build',
+    's3'
   ]);
 };

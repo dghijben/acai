@@ -13,8 +13,31 @@ $icon-font-path: "/bower_components/sass-bootstrap/fonts/";
 body {
     padding-top: 20px;
     padding-bottom: 20px;
-    border-top: 4px solid #1ABC96;
-    background: #1ABC96;
+    border-top: 4px solid #85144B;
+    background: #DDDDDD;
+}
+
+#header {
+    background: #DDDDDD;
+}
+#introduction {
+    background: #FFFFFF;
+}
+
+header {
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.container {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 0; /* was 15px */
+  padding-right: 0; /* was 15px */
+}
+.row {
+  margin-left: 0;
+  margin-right: 0;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
